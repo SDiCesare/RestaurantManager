@@ -16,6 +16,7 @@ public class MenuUtil {
         try {
             w = new FileWriter(file);
             writer = new BufferedWriter(w);
+            writer.write(menu.getLastID() + "\n");
             for (MenuScope scope : menu.getMenu()) {
                 writer.write(MenuScope.toText(scope) + "\n");
             }
@@ -39,11 +40,13 @@ public class MenuUtil {
             r = new FileReader(file);
             reader = new BufferedReader(r);
             Menu menu = new Menu();
+            int lastID = Integer.parseInt(reader.readLine());
             String ln = reader.readLine();
             while (ln != null) {
                 menu.add(MenuScope.fromText(ln));
                 ln = reader.readLine();
             }
+            menu.setLastID(lastID);
             return menu;
         } catch (IOException ex) {
             ex.printStackTrace();

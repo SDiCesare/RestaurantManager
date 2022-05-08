@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+//TODO Documentation and Change the name
 public class CustomButton extends JLabel implements MouseListener {
 
     private final Color baseForeground;

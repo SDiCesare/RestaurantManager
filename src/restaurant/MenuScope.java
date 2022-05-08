@@ -71,4 +71,12 @@ public class MenuScope {
                 ", cost=" + cost +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof MenuScope) {
+            return ((MenuScope) obj).id == this.id;
+        }
+        return false;
+    }
 }

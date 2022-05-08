@@ -1,5 +1,6 @@
 package gui.panels;
 
+import gui.MainFrame;
 import gui.buttons.CustomButton;
 
 import javax.imageio.ImageIO;
@@ -44,15 +45,19 @@ public class MainPanel extends JPanel {
             System.out.println("Waiter");
         });
         this.cookSelectionButton = addEmployeeButton("Cook");
-        this.waiterSelectionButton.setAction((e) -> {
+        this.cookSelectionButton.setAction((e) -> {
             System.out.println("Cook");
         });
         this.chefSelectionButton = addEmployeeButton("Chef");
-        this.waiterSelectionButton.setAction((e) -> {
-            System.out.println("Chef");
+        this.chefSelectionButton.setAction((e) -> {
+            Component root = SwingUtilities.getRoot(((Component) e.getSource()));
+            if (root instanceof MainFrame) {
+                ChefPanel content = new ChefPanel(((MainFrame) root).getMenu());
+                ((MainFrame) root).setContent(content);
+            }
         });
         this.cashierSelectionButton = addEmployeeButton("Cashier");
-        this.waiterSelectionButton.setAction((e) -> {
+        this.cashierSelectionButton.setAction((e) -> {
             System.out.println("Cashier");
         });
         this.exitButton = addEmployeeButton("Exit");

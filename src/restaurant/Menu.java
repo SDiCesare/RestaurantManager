@@ -5,21 +5,33 @@ import java.util.ArrayList;
 public class Menu {
 
     private final ArrayList<MenuScope> menu;
+    private int lastID;
 
     /**
      * The Default constructor of the class Menu
      */
     public Menu() {
         this.menu = new ArrayList<>();
+        this.lastID = 0;
     }
 
     /**
      * Adds a MenuScope on this menu
      *
-     * @param scope The MenuScope to add in this Menu
+     * @param scope The MenuScope to add
      */
     public void add(MenuScope scope) {
         this.menu.add(scope);
+        this.lastID++;
+    }
+
+    /**
+     * Removes a {@link MenuScope MenuScope} from this menu
+     *
+     * @param scope The MenuScope to remove
+     */
+    public void remove(MenuScope scope) {
+        this.menu.remove(scope);
     }
 
     /**
@@ -66,6 +78,21 @@ public class Menu {
 
     public ArrayList<MenuScope> getMenu() {
         return menu;
+    }
+
+    public int getLastID() {
+        return lastID;
+    }
+
+    public void setLastID(int lastID) {
+        this.lastID = lastID;
+    }
+
+    /**
+     * @return The number of {@link MenuScope MenuScope} in this menu
+     */
+    public int entries() {
+        return menu.size();
     }
 
     @Override
