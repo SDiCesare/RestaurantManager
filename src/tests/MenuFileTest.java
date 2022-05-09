@@ -16,7 +16,7 @@ public class MenuFileTest {
     }
 
     private static void testLoadFile() {
-        Menu menu = MenuUtil.loadMenuFromFile(new File("Test Menu.mn"));
+        Menu menu = MenuUtil.loadMenuFromFile(new File("Test Menu.txt"));
         if (menu == null) {
             System.err.println("Menu not loaded");
             return;
@@ -37,8 +37,8 @@ public class MenuFileTest {
         for (MenuScope scope : menu.getMenu()) {
             System.out.println(scope);
         }
-        MenuUtil.saveMenuOnFile(new File("Test Menu.mn"), menu);
-        System.out.println("Menu Saved Successfully as \"Test Menu.mn\"");
+        MenuUtil.saveMenuOnFile(new File("Test Menu.txt"), menu);
+        System.out.println("Menu Saved Successfully as \"Test Menu.txt\"");
     }
 
     private static String randomText(Random random, int length) {

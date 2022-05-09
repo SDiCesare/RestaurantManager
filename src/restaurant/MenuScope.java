@@ -5,10 +5,10 @@ public class MenuScope {
     /**
      * Parse a string into a MenuScope
      *
-     * @param ln the string to parse
+     * @param text the string to parse
      */
-    public static MenuScope fromText(String ln) {
-        String[] split = ln.split(";");
+    public static MenuScope fromText(String text) {
+        String[] split = text.split(";");
         int id = Integer.parseInt(split[0]);
         String name = split[1];
         int cost = Integer.parseInt(split[2]);
