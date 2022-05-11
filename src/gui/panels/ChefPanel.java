@@ -14,17 +14,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-public class ChefPanel extends JPanel {
-
-    private static BufferedImage background;
-
-    static {
-        try {
-            background = ImageIO.read(MainPanel.class.getClassLoader().getResourceAsStream("assets/menuBackground.png"));
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
+public class ChefPanel extends AbstractPanel {
 
     private Menu menu;
     private MenuPanel menuPanel;
@@ -86,9 +76,8 @@ public class ChefPanel extends JPanel {
     }
 
     @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        g.drawImage(background, 0, 0, this.getWidth(), this.getHeight(), null);
+    String getBackgroundAssets() {
+        return "assets/menuBackground.png";
     }
 
     /**

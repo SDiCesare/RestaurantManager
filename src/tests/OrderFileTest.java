@@ -22,8 +22,13 @@ public class OrderFileTest {
             order.add(menuScope);
             order.incrementDishQuantity(menuScope, random.nextInt(11) - 5);
         }
+        order.cook(order.get(1).getScope(), 2);
         System.out.println("Order Created:");
         for (Dish dish : order.getDishes()) {
+            System.out.println(dish);
+        }
+        System.out.println("Cooked:");
+        for (Dish dish : order.getCookedDishes()) {
             System.out.println(dish);
         }
         OrderUtil.saveOrderOnFile(new File("Test Order.txt"), order);
@@ -36,7 +41,12 @@ public class OrderFileTest {
             System.err.println("Order not loaded");
             return;
         }
+        System.out.println("Dishes:");
         for (Dish dish : order.getDishes()) {
+            System.out.println(dish);
+        }
+        System.out.println("Cooked:");
+        for (Dish dish : order.getCookedDishes()) {
             System.out.println(dish);
         }
     }

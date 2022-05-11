@@ -47,12 +47,16 @@ public class CustomButton extends JLabel implements MouseListener {
     @Override
     public void mouseEntered(MouseEvent e) {
         this.setForeground(this.brightForeground);
-        this.repaint();
+        Component root = SwingUtilities.getRoot(((Component) e.getSource()));
+        root.repaint();
+        root.revalidate();
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
         this.setForeground(this.baseForeground);
-        this.repaint();
+        Component root = SwingUtilities.getRoot(((Component) e.getSource()));
+        root.repaint();
+        root.revalidate();
     }
 }

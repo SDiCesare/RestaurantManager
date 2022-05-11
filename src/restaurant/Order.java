@@ -6,6 +6,7 @@ public class Order {
 
     private int tableNumber;
     private LinkedList<Dish> dishes;
+    private LinkedList<Dish> cookedDishes;
 
     /**
      * The Constructor of the class Order.
@@ -40,6 +41,36 @@ public class Order {
         } else {
             this.dishes = new LinkedList<>();
         }
+        this.cookedDishes = new LinkedList<>();
+    }
+
+    /**
+     * Cooks a single {@link MenuScope MenuScope} in this order.
+     *
+     * @param scope The MenuScope cooked
+     */
+    public void cook(MenuScope scope) {
+        this.cook(scope, 1);
+    }
+
+    /**
+     * Cooks a certain quantity of {@link MenuScope MenuScope} in this order.
+     *
+     * @param scope    The MenuScope cooked.
+     * @param quantity The quantity of scopes cooked.
+     */
+    public void cook(MenuScope scope, int quantity) {
+        if (!this.contains(scope)) {
+            return;
+        }
+        this.decrementDishQuantity(scope, quantity);
+        for (Dish dish : this.cookedDishes) {
+            if (dish.getScope().equals(scope)) {
+                dish.incrementQuantity(quantity);
+                return;
+            }
+        }
+        this.cookedDishes.add(new Dish(scope, quantity));
     }
 
     /**
@@ -70,8 +101,30 @@ public class Order {
         return null;
     }
 
+    public Dish getCooked(MenuScope scope) {
+        for (Dish dish : this.cookedDishes) {
+            if (dish.getScope().equals(scope)) {
+                return dish;
+            }
+        }
+        return null;
+    }
+
+    public int indexOf(MenuScope scope) {
+        for (int i = 0; i < this.dishes.size(); i++) {
+            if (this.dishes.get(i).getScope().equals(scope)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     public LinkedList<Dish> getDishes() {
         return dishes;
+    }
+
+    public LinkedList<Dish> getCookedDishes() {
+        return cookedDishes;
     }
 
     /**
@@ -102,18 +155,19 @@ public class Order {
 
     /**
      * Adds a Dish to this order.
-     * If the dish is already in this Order, the quantity of that dish are incremented.
      *
-     * @param d The dish to add
+     * @param dish The dish to add
      */
-    public void add(Dish d) {
-        for (Dish dish : this.dishes) {
-            if (dish.getScope().equals(d.getScope())) {
-                dish.incrementQuantity(d.getQuantity());
-                return;
-            }
+    public void add(Dish dish) {
+        if (!this.dishes.contains(dish)) {
+            this.dishes.add(dish);
         }
-        this.dishes.add(d);
+    }
+
+    public void addCooked(Dish dish) {
+        if (!this.cookedDishes.contains(dish)) {
+            this.cookedDishes.add(dish);
+        }
     }
 
     /**
@@ -122,7 +176,17 @@ public class Order {
      * @param scope The MenuScope to which the quantity is decremented
      */
     public void decrementDishQuantity(MenuScope scope) {
-        this.incrementDishQuantity(scope, -1);
+        this.decrementDishQuantity(scope, 1);
+    }
+
+    /**
+     * Decrements by a certain amount the quantity associated with a {@link MenuScope MenuScope} on this order.
+     *
+     * @param scope    The MenuScope to which the quantity is decremented.
+     * @param quantity The amount to decrement
+     */
+    public void decrementDishQuantity(MenuScope scope, int quantity) {
+        this.incrementDishQuantity(scope, -quantity);
     }
 
     /**
@@ -148,6 +212,24 @@ public class Order {
         }
     }
 
+    public void incrementQuantity(Dish dish, int amount) {
+        int index = this.dishes.indexOf(dish);
+        this.dishes.get(index).incrementQuantity(amount);
+    }
+
+    public boolean contains(Dish dish) {
+        return this.dishes.contains(dish);
+    }
+
+    public boolean contains(MenuScope scope) {
+        for (Dish dish : this.dishes) {
+            if (dish.getScope().equals(scope)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Removes a {@link MenuScope MenuScope} from this order
      *
@@ -167,6 +249,33 @@ public class Order {
         }
     }
 
+
+    public void combine(Order order) {
+        for (Dish dish : order.dishes) {
+            if (this.contains(dish)) {
+                this.incrementQuantity(dish, dish.getQuantity());
+            } else {
+                this.dishes.add(dish);
+            }
+        }
+        for (Dish dish : order.cookedDishes) {
+            if (this.cookedDishes.contains(dish)) {
+                this.cook(dish.getScope(), dish.getQuantity());
+            } else {
+                this.cookedDishes.add(dish);
+            }
+        }
+    }
+
+    /**
+     * Removes a {@link Dish Dish} from this order
+     *
+     * @param dish The dish to remove
+     */
+    public void remove(Dish dish) {
+        this.dishes.remove(dish);
+    }
+
     public int getTableNumber() {
         return tableNumber;
     }
@@ -174,4 +283,17 @@ public class Order {
     public void setTableNumber(int tableNumber) {
         this.tableNumber = tableNumber;
     }
+
+    public int entries() {
+        return this.dishes.size();
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "tableNumber=" + tableNumber +
+                ", dishes=" + dishes +
+                '}';
+    }
+
 }

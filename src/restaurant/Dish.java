@@ -28,12 +28,12 @@ public class Dish {
 
     /**
      * The Constructor of the Dish Class.
-     * Initialize a Dish with the specified scope and a quantity of 1.
+     * Initialize a Dish with the specified scope and a quantity of 0.
      *
      * @param scope The {@link MenuScope MenuScope} to associate with this Dish
      */
     public Dish(MenuScope scope) {
-        this(scope, 1);
+        this(scope, 0);
     }
 
     /**
@@ -46,6 +46,13 @@ public class Dish {
     public Dish(MenuScope scope, int quantity) {
         this.scope = scope;
         this.quantity = quantity;
+    }
+
+    /**
+     * Decrements this Dish quantity by 1.
+     */
+    public void decrementQuantity() {
+        this.quantity--;
     }
 
     /**
@@ -62,6 +69,9 @@ public class Dish {
      */
     public void incrementQuantity(int amount) {
         this.quantity += amount;
+        if (this.quantity < 0) {
+            this.quantity = 0;
+        }
     }
 
     public void setQuantity(int quantity) {

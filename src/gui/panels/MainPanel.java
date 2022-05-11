@@ -14,17 +14,7 @@ import java.io.IOException;
  * This Class represent the Main Menu of the Restaurant Manager.
  * It handles the close of the window, and the choice of the employee type.
  */
-public class MainPanel extends JPanel {
-
-    private static BufferedImage background;
-
-    static {
-        try {
-            background = ImageIO.read(MainPanel.class.getClassLoader().getResourceAsStream("assets/background.png"));
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
+public class MainPanel extends AbstractPanel {
 
     private CustomButton waiterSelectionButton;
     private CustomButton cookSelectionButton;
@@ -42,7 +32,10 @@ public class MainPanel extends JPanel {
         this.setLayout(null);
         this.waiterSelectionButton = addEmployeeButton("Waiter");
         this.waiterSelectionButton.setAction((e) -> {
-            System.out.println("Waiter");
+            Component root = getRoot(((Component) e.getSource()));
+            if (root instanceof MainFrame) {
+                ((MainFrame) root).setContent(new WaiterPanel(((MainFrame) root).getMenu()));
+            }
         });
         this.cookSelectionButton = addEmployeeButton("Cook");
         this.cookSelectionButton.setAction((e) -> {
@@ -50,10 +43,11 @@ public class MainPanel extends JPanel {
         });
         this.chefSelectionButton = addEmployeeButton("Chef");
         this.chefSelectionButton.setAction((e) -> {
-            Component root = SwingUtilities.getRoot(((Component) e.getSource()));
+            Component root = getRoot(((Component) e.getSource()));
             if (root instanceof MainFrame) {
-                ChefPanel content = new ChefPanel(((MainFrame) root).getMenu());
-                ((MainFrame) root).setContent(content);
+                ((MainFrame) root).setContent(new ChefPanel(((MainFrame) root).getMenu()));
+            } else {
+                throw new RuntimeException("Root must be an instance of MainFrame");
             }
         });
         this.cashierSelectionButton = addEmployeeButton("Cashier");
@@ -65,6 +59,15 @@ public class MainPanel extends JPanel {
             Component root = SwingUtilities.getRoot(((Component) e.getSource()));
             root.dispatchEvent(new WindowEvent((Window) root, WindowEvent.WINDOW_CLOSING));
         });
+    }
+
+    private Component getRoot(Component source) {
+        return SwingUtilities.getRoot(source);
+    }
+
+    @Override
+    String getBackgroundAssets() {
+        return "assets/background.png";
     }
 
     /**
@@ -90,11 +93,5 @@ public class MainPanel extends JPanel {
         this.add(button);
         employeeCount++;
         return button;
-    }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        g.drawImage(background, 0, 0, this.getWidth(), this.getHeight(), null);
     }
 }
