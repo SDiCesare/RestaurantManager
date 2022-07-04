@@ -11,7 +11,7 @@ Run the file [compile.bat](https://github.com/SDiCesare/RestaurantManager/blob/m
 The file should compile all the .java file in the src/ folder, and store them in the directory "bin", and create the file "RestaurantManager.jar"
 
 # Start
-Then, for running the generated jar you could run the file [run.bat](https://github.com/SDiCesare/RestaurantManager/blob/master/run.bat) in the directory, or open the cmd and typing
+Then, for running the generated jar you could run the file [run.bat](https://github.com/SDiCesare/RestaurantManager/blob/master/run.bat) in the directory, or open the cmd in the same directory of the RestourantManager.jar file early generated, and typing
 ```bash
 java -cp RestaurantManager.jar main.Main
 ```
