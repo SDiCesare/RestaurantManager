@@ -3,9 +3,6 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 orders/
-Menu.txt
-Test Menu.txt
-Test Order.txt
 
 ### Eclipse ###
 .apt_generated
@@ -32,4 +29,9 @@ bin/
 ### Mac OS ###
 .DS_Store
 Menu.txt
-orders/table1.txt
+
+### Project ###
+Menu.txt
+Test Menu.txt
+Test Order.txt
+
