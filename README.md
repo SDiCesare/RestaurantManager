@@ -8,6 +8,7 @@ A Restaurant Manager Project for University
 # Install
 
 Run the file [compile.bat](https://github.com/SDiCesare/RestaurantManager/blob/master/compile.bat) in the directory.
+
 The file should compile all the .java file in the src/ folder, and store them in the directory "bin", and create the file "RestaurantManager.jar"
 
 # Start
@@ -19,4 +20,5 @@ java -cp RestaurantManager.jar main.Main
 # Bug
 
 No bug revealed for know.
+
 Please, write an Issues if you encounter a bug. It will be solved as soon as possible.
