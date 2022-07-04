@@ -1,9 +1,0 @@
-8
-0;Pizza Margherita;700
-1;Pizza Provola e Funghi;1150
-2;Pizza 4 Formaggi;1200
-3;Paccheri Alla Carbonara con Tartufo;1500
-4;Pizza con Bufala;1050
-5;Pizza Crostino;950
-6;Pizza Boscaiola;1000
-7;Pizza Margherita con Bufala;1000
