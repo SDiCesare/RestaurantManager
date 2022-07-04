@@ -1,14 +1,11 @@
 package gui.panels;
 
 import gui.MainFrame;
-import gui.buttons.CustomButton;
+import gui.buttons.TextButtonHighlighted;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 
 /**
  * This Class represent the Main Menu of the Restaurant Manager.
@@ -16,11 +13,11 @@ import java.io.IOException;
  */
 public class MainPanel extends AbstractPanel {
 
-    private CustomButton waiterSelectionButton;
-    private CustomButton cookSelectionButton;
-    private CustomButton chefSelectionButton;
-    private CustomButton cashierSelectionButton;
-    private CustomButton exitButton;
+    private TextButtonHighlighted waiterSelectionButton;
+    private TextButtonHighlighted cookSelectionButton;
+    private TextButtonHighlighted chefSelectionButton;
+    private TextButtonHighlighted cashierSelectionButton;
+    private TextButtonHighlighted exitButton;
 
     /**
      * The Default Constructor of the {@link MainPanel MainMenu} class
@@ -39,7 +36,12 @@ public class MainPanel extends AbstractPanel {
         });
         this.cookSelectionButton = addEmployeeButton("Cook");
         this.cookSelectionButton.setAction((e) -> {
-            System.out.println("Cook");
+            Component root = getRoot(((Component) e.getSource()));
+            if (root instanceof MainFrame) {
+                ((MainFrame) root).setContent(new CookPanel(((MainFrame) root).getMenu()));
+            } else {
+                throw new RuntimeException("Root must be an instance of MainFrame");
+            }
         });
         this.chefSelectionButton = addEmployeeButton("Chef");
         this.chefSelectionButton.setAction((e) -> {
@@ -81,10 +83,10 @@ public class MainPanel extends AbstractPanel {
      * Add An Employee Type Button Selection
      *
      * @param text The Name of the Employee Type
-     * @return The {@link CustomButton CustomButton} associated with the Employee Type
+     * @return The {@link TextButtonHighlighted CustomButton} associated with the Employee Type
      */
-    private CustomButton addEmployeeButton(String text) {
-        CustomButton button = new CustomButton(Color.LIGHT_GRAY, Color.YELLOW);
+    private TextButtonHighlighted addEmployeeButton(String text) {
+        TextButtonHighlighted button = new TextButtonHighlighted(Color.LIGHT_GRAY, Color.YELLOW);
         button.setBounds(215, 180 + employeeCount * 100, 150, 30);
         button.setText(text);
         button.setFont(button.getFont().deriveFont(30.0f));

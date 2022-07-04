@@ -1,6 +1,5 @@
 package gui.dialogs;
 
-import com.sun.istack.internal.NotNull;
 import restaurant.MenuScope;
 
 import javax.swing.*;
@@ -28,7 +27,7 @@ public class MenuScopeDialog extends JDialog {
      * @param scope The MenuScope to edit
      * @param frame The parent to which is locked this JDialog
      */
-    public MenuScopeDialog(@NotNull MenuScope scope, JFrame frame) {
+    public MenuScopeDialog(MenuScope scope, JFrame frame) {
         super(frame, "Add Menu Scope");
         this.scope = scope;
         this.shouldSave = false;

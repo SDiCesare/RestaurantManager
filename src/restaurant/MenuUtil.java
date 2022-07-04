@@ -5,6 +5,23 @@ import java.io.*;
 public class MenuUtil {
 
     /**
+     * Calculate and returns the name with the higher length in the menu
+     *
+     * @param menu: The Menu containing the MenuScopes
+     * @return The higher name length from the MenuScopes
+     */
+    public static int getMaxNameLength(Menu menu) {
+        int length = 0;
+        for (MenuScope scope : menu.getMenu()) {
+            int l = scope.getName().length();
+            if (l > length) {
+                length = l;
+            }
+        }
+        return length;
+    }
+
+    /**
      * Save a Menu as a text file
      *
      * @param file The file in which the menu is saved

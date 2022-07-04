@@ -17,18 +17,18 @@ public class OrderFileTest {
     private static void testSaveFile(Menu menu) {
         Random random = new Random();
         Order order = new Order(random.nextInt(10) + 1);
+        MenuScope randomScope = getRandomScope(menu, random);
+        order.add(randomScope, 10);
+        order.cook(randomScope);
+        order.cook(randomScope);
+        order.cook(randomScope);
         for (int i = 0; i < 5; i++) {
             MenuScope menuScope = getRandomScope(menu, random);
             order.add(menuScope);
-            order.incrementDishQuantity(menuScope, random.nextInt(11) - 5);
+            order.incrementQuantity(menuScope, random.nextInt(3));
         }
-        order.cook(order.get(1).getScope(), 2);
         System.out.println("Order Created:");
         for (Dish dish : order.getDishes()) {
-            System.out.println(dish);
-        }
-        System.out.println("Cooked:");
-        for (Dish dish : order.getCookedDishes()) {
             System.out.println(dish);
         }
         OrderUtil.saveOrderOnFile(new File("Test Order.txt"), order);
@@ -43,10 +43,6 @@ public class OrderFileTest {
         }
         System.out.println("Dishes:");
         for (Dish dish : order.getDishes()) {
-            System.out.println(dish);
-        }
-        System.out.println("Cooked:");
-        for (Dish dish : order.getCookedDishes()) {
             System.out.println(dish);
         }
     }

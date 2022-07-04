@@ -16,7 +16,7 @@ public class MainFrame extends JFrame {
 
     public MainFrame() {
         super("Restaurant Manager");
-        this.menu = MenuUtil.loadMenuFromFile(new File("Test Menu.txt"));
+        this.menu = MenuUtil.loadMenuFromFile(new File("Menu.txt"));
         this.setSize(600, 800);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setResizable(false);
@@ -27,7 +27,7 @@ public class MainFrame extends JFrame {
             @Override
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
-                MenuUtil.saveMenuOnFile(new File("Test Menu.txt"), MainFrame.this.menu);
+                MenuUtil.saveMenuOnFile(new File("Menu.txt"), MainFrame.this.menu);
             }
         });
     }

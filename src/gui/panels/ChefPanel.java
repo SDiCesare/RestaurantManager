@@ -1,18 +1,16 @@
 package gui.panels;
 
 import gui.MainFrame;
-import gui.buttons.CustomButton;
+import gui.buttons.ImageButtonHighlighted;
+import gui.buttons.TextButtonHighlighted;
 import gui.dialogs.MenuScopeDialog;
 import restaurant.Menu;
 import restaurant.MenuScope;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 
 public class ChefPanel extends AbstractPanel {
 
@@ -29,7 +27,7 @@ public class ChefPanel extends AbstractPanel {
     public ChefPanel(Menu menu) {
         super();
         this.setLayout(null);
-        CustomButton addScopeButton = new CustomButton(Color.BLACK, Color.WHITE);
+        TextButtonHighlighted addScopeButton = new TextButtonHighlighted(Color.BLACK, Color.WHITE);
         addScopeButton.setText("+");
         addScopeButton.setFont(addScopeButton.getFont().deriveFont(50.0f));
         addScopeButton.setBounds(450, 65, 50, 30);
@@ -38,8 +36,7 @@ public class ChefPanel extends AbstractPanel {
             MenuScopeDialog menuScopeDialog = new MenuScopeDialog(this.menu.getLastID(), ((JFrame) root));
             this.addMenuScope(menuScopeDialog.showDialog());
         });
-        CustomButton backToMenuButton = new CustomButton(Color.BLACK, Color.WHITE);
-        backToMenuButton.setText("←");
+        ImageButtonHighlighted backToMenuButton = new ImageButtonHighlighted("assets/arrow.png", "assets/lightArrow.png");
         backToMenuButton.setFont(addScopeButton.getFont());
         backToMenuButton.setBounds(80, 65, 50, 30);
         backToMenuButton.setAction((e) -> {

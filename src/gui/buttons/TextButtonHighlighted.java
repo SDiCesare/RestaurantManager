@@ -8,14 +8,14 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 //TODO Documentation and Change the name
-public class CustomButton extends JLabel implements MouseListener {
+public class TextButtonHighlighted extends JLabel implements MouseListener {
 
     private final Color baseForeground;
     private final Color brightForeground;
 
     private ActionListener action;
 
-    public CustomButton(Color baseForeground, Color brightForeground) {
+    public TextButtonHighlighted(Color baseForeground, Color brightForeground) {
         super();
         this.baseForeground = baseForeground;
         this.brightForeground = brightForeground;

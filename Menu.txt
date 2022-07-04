@@ -6,4 +6,4 @@
 4;Pizza con Bufala;1050
 5;Pizza Crostino;950
 6;Pizza Boscaiola;1000
-7;Pizza Prosciutto e Funghi;950
+7;Pizza Margherita con Bufala;1000

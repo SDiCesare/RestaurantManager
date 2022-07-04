@@ -1,7 +1,8 @@
 package gui.panels;
 
 import gui.MainFrame;
-import gui.buttons.CustomButton;
+import gui.buttons.ImageButtonHighlighted;
+import gui.buttons.TextButtonHighlighted;
 import restaurant.*;
 import restaurant.Menu;
 
@@ -17,10 +18,9 @@ public class WaiterPanel extends AbstractPanel {
     public WaiterPanel(Menu menu) {
         super();
         this.setLayout(null);
-        CustomButton backToMenuButton = new CustomButton(Color.BLACK, Color.WHITE);
-        backToMenuButton.setText("←");
+        ImageButtonHighlighted backToMenuButton = new ImageButtonHighlighted("assets/arrow.png", "assets/lightArrow.png");
         backToMenuButton.setFont(backToMenuButton.getFont().deriveFont(50.0f));
-        backToMenuButton.setBounds(80, 65, 50, 30);
+        backToMenuButton.setBounds(80, 65, 80, 30);
         backToMenuButton.setAction((e) -> {
             Component root = SwingUtilities.getRoot(((Component) e.getSource()));
             if (root instanceof MainFrame) {
@@ -46,6 +46,7 @@ public class WaiterPanel extends AbstractPanel {
         });
         JCheckBox showSelected = new JCheckBox("Show Selected");
         showSelected.setSelected(false);
+        showSelected.setToolTipText("Show only The Chosen Dish");
         showSelected.addActionListener(e -> {
             Object source = e.getSource();
             if (source instanceof JCheckBox) {
@@ -63,14 +64,14 @@ public class WaiterPanel extends AbstractPanel {
         pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         pane.setBounds(100, 150, 390, 500);
         //pane.setBorder(BorderFactory.createEmptyBorder());
-        CustomButton sendOrderButton = new CustomButton(Color.BLACK, Color.WHITE);
+        TextButtonHighlighted sendOrderButton = new TextButtonHighlighted(Color.BLACK, Color.WHITE);
         sendOrderButton.setText("Send Order To Kitchen");
         sendOrderButton.setFont(sendOrderButton.getFont().deriveFont(30.0f));
         sendOrderButton.setBounds(120, 670, 330, 30);
         sendOrderButton.setAction((e) -> {
             int result = JOptionPane.showConfirmDialog(this, "Send the order to the kitchen?", "Sending Order", JOptionPane.YES_NO_OPTION);
             if (result == 0) {
-                OrderUtil.sendOrder(this.currentOrder, this.menu);
+                OrderUtil.saveOrder(this.currentOrder);
             }
         });
         sendOrderButton.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.DARK_GRAY));
@@ -141,9 +142,9 @@ public class WaiterPanel extends AbstractPanel {
             JLabel quantityLabel = new JLabel(String.valueOf(this.dish.getQuantity()));
             quantityLabel.setFont(nameLabel.getFont());
             quantityLabel.setBounds(nameLabel.getWidth() + nameLabel.getX(), nameLabel.getY(), 50, 50);
-            CustomButton incrementQuantity = new CustomButton(Color.BLACK, Color.WHITE);
+            TextButtonHighlighted incrementQuantity = new TextButtonHighlighted(Color.BLACK, Color.WHITE);
             incrementQuantity.setAction((e) -> {
-                this.dish.incrementQuantity();
+                this.dish.incrementQuantity(1);
                 if (!currentOrder.contains(this.dish)) {
                     currentOrder.add(this.dish);
                 }
@@ -153,12 +154,12 @@ public class WaiterPanel extends AbstractPanel {
             incrementQuantity.setText("+");
             incrementQuantity.setFont(incrementQuantity.getFont().deriveFont(30.0f));
             incrementQuantity.setBounds(quantityLabel.getWidth() + quantityLabel.getX() + 20, quantityLabel.getY(), 30, 50);
-            CustomButton decrementQuantity = new CustomButton(Color.BLACK, Color.WHITE);
+            TextButtonHighlighted decrementQuantity = new TextButtonHighlighted(Color.BLACK, Color.WHITE);
             decrementQuantity.setAction((e) -> {
                 if (this.dish.getQuantity() == 0) {
                     return;
                 }
-                this.dish.decrementQuantity();
+                this.dish.decrementQuantity(1);
                 if (this.dish.getQuantity() == 0) {
                     currentOrder.remove(this.dish);
                 }

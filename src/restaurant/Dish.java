@@ -51,15 +51,8 @@ public class Dish {
     /**
      * Decrements this Dish quantity by 1.
      */
-    public void decrementQuantity() {
-        this.quantity--;
-    }
-
-    /**
-     * Increments this Dish quantity by 1.
-     */
-    public void incrementQuantity() {
-        this.quantity++;
+    public void decrementQuantity(int quantity) {
+        this.quantity -= quantity;
     }
 
     /**
