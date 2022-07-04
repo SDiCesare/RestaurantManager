@@ -31,8 +31,6 @@ public class CookPanel extends AbstractPanel {
             }
         });
         this.menu = menu;
-        //this.currentOrder = OrderUtil.getOrderFromTable(1, this.menu);
-        //TODO Make accessible only the panel with orders
         Order[] orders = OrderUtil.getActiveOrders(menu);
         if (orders.length > 0) {
             this.currentOrder = OrderUtil.getOrderFromTable(orders[0].getTableNumber(), this.menu);

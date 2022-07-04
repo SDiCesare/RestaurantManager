@@ -1,10 +1,66 @@
 package restaurant;
 
 import java.io.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 
 public class OrderUtil {
 
+
+    public static boolean availableOrder(Order order) {
+        File file = new File("orders/table" + order.getTableNumber() + ".txt");
+        boolean exists = file.exists();
+        if (!exists) {
+            file.delete();
+        }
+        return exists;
+    }
+
+    public static void stampAndDeleteOrder(Order order) {
+        String receipt = "";
+        int nameLength = OrderUtil.getMaxNameLength(order);
+        int totalLength = nameLength + 15;
+        float total = 0.0f;
+        receipt += String.format("Someone's Restaurant%nVia Something in Somewhere(SM)%n");
+        DateTimeFormatter fileDateFormat = DateTimeFormatter.ofPattern("HH_mm_ss_dd_MM_yyyy");
+        DateTimeFormatter receiptDateFormat = DateTimeFormatter.ofPattern("dd-MM-yyy HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        receipt += String.format("%s%n%n", receiptDateFormat.format(now));
+        receipt += String.format("%-" + nameLength + "s %s %11s%n%n", "Name", "Q", "Costs");
+        for (Dish dish : order.getCookedDishes()) {
+            int cost = dish.getScope().getCost();
+            cost *= dish.getQuantity();
+            total += (cost / 100.f);
+            receipt += String.format("%-" + nameLength + "s X%d %10.2f$%n", dish.getScope().getName(), dish.getQuantity(), (cost / 100.f));
+        }
+        String separator = new String(new char[totalLength]).replace("\0", "=");
+        receipt += String.format("%n%s%n%-" + (nameLength + 3) + "s %10.2f$%n", separator, "TOTAL", total);
+        FileWriter w;
+        BufferedWriter writer;
+        File file = new File("receipts/table" + order.getTableNumber() + "__" + fileDateFormat.format(now) + ".txt");
+        if (!file.getParentFile().exists()) {
+            boolean mkdirs = file.getParentFile().mkdirs();
+            if (!mkdirs) {
+                throw new RuntimeException("Can't create receipts directory!");
+            }
+        }
+        try {
+            w = new FileWriter(file);
+            writer = new BufferedWriter(w);
+            writer.write(receipt);
+            writer.write("\n");
+            writer.close();
+            w.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        File orderFile = new File("orders/table" + order.getTableNumber() + ".txt");
+        boolean delete = orderFile.delete();
+        if (!delete) {
+            System.out.println("Can't delete order file!");
+        }
+    }
 
     /**
      * Calculate and returns the name with the higher length in the Order
@@ -40,6 +96,23 @@ public class OrderUtil {
         for (int i = 1; i <= 10; i++) {
             Order orderFromTable = getOrderFromTable(i, menu);
             if (orderFromTable.entries() > 0) {
+                orders.add(orderFromTable);
+            }
+        }
+        return orders.toArray(new Order[]{});
+    }
+
+    /**
+     * Returns a list of completed orders
+     *
+     * @param menu: The menu that contains the Order dishes
+     * @return A List of completed orders
+     */
+    public static Order[] getCompletedOrders(Menu menu) {
+        LinkedList<Order> orders = new LinkedList<>();
+        for (int i = 1; i <= 10; i++) {
+            Order orderFromTable = getOrderFromTable(i, menu);
+            if (orderFromTable.getCookedDishes().size() > 0) {
                 orders.add(orderFromTable);
             }
         }

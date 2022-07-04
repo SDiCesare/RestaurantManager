@@ -46,7 +46,7 @@ public class Order {
 
     /**
      * TODO Doc
-     * */
+     */
     public boolean contains(Dish dish) {
         return this.dishes.contains(dish);
     }
@@ -207,6 +207,15 @@ public class Order {
 
     public int getTableNumber() {
         return tableNumber;
+    }
+
+    public int getTotal() {
+        int total = 0;
+        for (Dish dish : this.cookedDishes) {
+            int cost = dish.getScope().getCost() * dish.getQuantity();
+            total += cost;
+        }
+        return total;
     }
 
     @Override

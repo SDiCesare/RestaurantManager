@@ -54,7 +54,12 @@ public class MainPanel extends AbstractPanel {
         });
         this.cashierSelectionButton = addEmployeeButton("Cashier");
         this.cashierSelectionButton.setAction((e) -> {
-            System.out.println("Cashier");
+            Component root = getRoot(((Component) e.getSource()));
+            if (root instanceof MainFrame) {
+                ((MainFrame) root).setContent(new CashierPanel(((MainFrame) root).getMenu()));
+            } else {
+                throw new RuntimeException("Root must be an instance of MainFrame");
+            }
         });
         this.exitButton = addEmployeeButton("Exit");
         this.exitButton.setAction((e) -> {
