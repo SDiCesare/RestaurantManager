@@ -7,6 +7,9 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * An Abstract JPanel that can load an image from assets, and draws it as the background of the panel
+ */
 public abstract class AbstractPanel extends JPanel {
 
     private final BufferedImage backgroundImage;
@@ -24,6 +27,9 @@ public abstract class AbstractPanel extends JPanel {
         }
     }
 
+    /**
+     * @return The Background Image from the assets
+     * */
     abstract String getBackgroundAssets();
 
     @Override

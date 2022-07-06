@@ -2,7 +2,6 @@ package gui.panels;
 
 import gui.MainFrame;
 import gui.buttons.ImageButtonHighlighted;
-import gui.buttons.TextButtonHighlighted;
 import restaurant.*;
 import restaurant.Menu;
 
@@ -17,6 +16,11 @@ public class CookPanel extends AbstractPanel {
     private JScrollPane orderPanelScrollPane;
     private OrderPanel orderPanel;
 
+    /**
+     * Creates a new CookPanel based on the menu
+     *
+     * @param menu: The Menu of the Restaurant
+     * */
     public CookPanel(Menu menu) {
         super();
         this.setLayout(null);
@@ -76,6 +80,9 @@ public class CookPanel extends AbstractPanel {
         return "assets/orderBackground.png";
     }
 
+    /**
+     * A Panel that displays only the Scopes presents in an Order
+     * */
     private class OrderPanel extends JPanel {
 
         private OrderPanel() {
@@ -97,11 +104,11 @@ public class CookPanel extends AbstractPanel {
 
     }
 
-    private class DishPanel extends JPanel {
 
-        private DishPanel(MenuScope scope) {
-            this(new Dish(scope));
-        }
+    /**
+     * A Panel that displays a Dish as an order to cook
+     * */
+    private class DishPanel extends JPanel {
 
         private DishPanel(Dish dish) {
             super();
@@ -116,14 +123,12 @@ public class CookPanel extends AbstractPanel {
             JLabel quantityLabel = new JLabel(String.valueOf(dish.getQuantity()));
             quantityLabel.setFont(nameLabel.getFont());
             quantityLabel.setBounds(nameLabel.getWidth() + nameLabel.getX(), nameLabel.getY(), 50, 50);
-            TextButtonHighlighted sendDishButton = new TextButtonHighlighted(Color.BLACK, Color.WHITE);
+            ImageButtonHighlighted sendDishButton = new ImageButtonHighlighted("assets/sendArrow.png", "assets/lightSendArrow.png");
             sendDishButton.setAction((e) -> {
                 currentOrder.cook(dish);
                 refreshOrderPanel();
             });
-            sendDishButton.setText("Send Dish ->");
-            sendDishButton.setFont(nameLabel.getFont());
-            sendDishButton.setBounds(quantityLabel.getWidth() + quantityLabel.getX() + 10, quantityLabel.getY(), 150, 50);
+            sendDishButton.setBounds(quantityLabel.getWidth() + quantityLabel.getX() + 50, quantityLabel.getY(), 150, 50);
             this.add(nameLabel);
             this.add(quantityLabel);
             this.add(sendDishButton);

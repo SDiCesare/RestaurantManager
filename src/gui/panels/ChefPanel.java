@@ -12,6 +12,11 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+/**
+ * A Panel with the Chef functionalities.
+ * Display All the Menu with the Scopes and their costs
+ * Can Modify the Scopes, add new scopes and deleting existing ones.
+ * */
 public class ChefPanel extends AbstractPanel {
 
     private Menu menu;

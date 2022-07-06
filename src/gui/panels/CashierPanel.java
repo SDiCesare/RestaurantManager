@@ -9,7 +9,10 @@ import restaurant.Menu;
 import javax.swing.*;
 import java.awt.*;
 
-//TODO Documentation
+/**
+ * A Panel for the Cashier work.
+ * It can display the  Receipt of the table, and can save them into a file.
+ */
 public class CashierPanel extends AbstractPanel {
 
     private Menu menu;
@@ -18,6 +21,11 @@ public class CashierPanel extends AbstractPanel {
     private JScrollPane receiptPanelScrollPane;
     private JLabel receiptTotalLabel;
 
+    /**
+     * Creates a new CashierPanel based on the given menu
+     *
+     * @param menu: The menu of the restaurant
+     */
     public CashierPanel(Menu menu) {
         super();
         this.setLayout(null);
@@ -49,13 +57,18 @@ public class CashierPanel extends AbstractPanel {
             JComboBox<String> box = (JComboBox) e.getSource();
             int selectedIndex = box.getSelectedIndex();
             this.currentOrder = OrderUtil.getOrderFromTable(orders[selectedIndex].getTableNumber(), this.menu);
-            this.receiptTotalLabel.setText(String.format("Receipt Total: %.2f", this.currentOrder.getTotal() / 100.f));
+            this.receiptTotalLabel.setText(String.format("Receipt Total: %.2f$", this.currentOrder.getTotal() / 100.f));
             refreshReceiptPanel();
         });
         TextButtonHighlighted printReceiptButton = new TextButtonHighlighted(Color.BLACK, Color.LIGHT_GRAY);
         printReceiptButton.setAction((e) -> {
             if (OrderUtil.availableOrder(this.currentOrder)) {
                 OrderUtil.stampAndDeleteOrder(this.currentOrder);
+                int tableNumber = this.currentOrder.getTableNumber();
+                this.currentOrder = new Order();
+                this.currentOrder.setTableNumber(tableNumber);
+                this.receiptTotalLabel.setText("Receipt Total: 0.00$");
+                refreshReceiptPanel();
             }
         });
         printReceiptButton.setBounds(200, 670, 200, 30);
@@ -108,10 +121,6 @@ public class CashierPanel extends AbstractPanel {
             }
         }
 
-        public void stampReceipt() {
-            //TODO Save Receipt File and delete order
-        }
-
     }
 
     /**
@@ -120,7 +129,7 @@ public class CashierPanel extends AbstractPanel {
      * The second label has the cost of the scope displayed in, and formatted as .2f$
      * This way of display a MenuScope is for the {@link ChefPanel ChefPanel} class.
      */
-    private class DishPanel extends JPanel {
+    private static class DishPanel extends JPanel {
 
         private final Dish dish;
 

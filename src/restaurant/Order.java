@@ -69,7 +69,12 @@ public class Order {
     }
 
     public void add(Dish dish) {
-        this.dishes.add(dish);
+        int index = this.indexOf(dish);
+        if (index == -1) {
+            this.dishes.add(dish);
+        } else {
+            this.dishes.get(index).incrementQuantity(dish.getQuantity());
+        }
     }
 
     public void addCooked(Dish dish) {

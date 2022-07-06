@@ -11,26 +11,36 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
-//TODO Documentation
+/**
+ * A button that change his image when passed on with the mouse.
+ * It's a JLabel that has no more functionality for text, and can change his Icon whenever the users
+ * passed on it with the mouse.
+ * */
 public class ImageButtonHighlighted extends JLabel implements MouseListener {
 
     private Icon icon;
     private Icon highlightedIcon;
     private ActionListener action;
 
-    public ImageButtonHighlighted(String i1, String i2) {
+    /**
+     * Crate an ImageButtonHighlighted with two image in the resources
+     *
+     * @param imageName The path of the image
+     * @param lightedImageName The path of the highlighted image
+     * */
+    public ImageButtonHighlighted(String imageName, String lightedImageName) {
         super();
         BufferedImage image = null;
         BufferedImage highlightedImage = null;
         try {
-            InputStream stream = this.getClass().getClassLoader().getResourceAsStream(i1);
+            InputStream stream = this.getClass().getClassLoader().getResourceAsStream(imageName);
             if (stream == null) {
-                throw new RuntimeException("Button image not found: " + i1);
+                throw new RuntimeException("Button image not found: " + imageName);
             }
             image = ImageIO.read(stream);
-            stream = this.getClass().getClassLoader().getResourceAsStream(i2);
+            stream = this.getClass().getClassLoader().getResourceAsStream(lightedImageName);
             if (stream == null) {
-                throw new RuntimeException("Button image not found: " + i2);
+                throw new RuntimeException("Button image not found: " + lightedImageName);
             }
             highlightedImage = ImageIO.read(stream);
         } catch (IOException ex) {
@@ -42,6 +52,11 @@ public class ImageButtonHighlighted extends JLabel implements MouseListener {
         this.addMouseListener(this);
     }
 
+    /**
+     * Defines the Action that the Label is doing when clicked on
+     *
+     * @param action The action to define for this Label
+     * */
     public void setAction(ActionListener action) {
         this.action = action;
     }
@@ -61,6 +76,16 @@ public class ImageButtonHighlighted extends JLabel implements MouseListener {
     @Override
     public void mouseReleased(MouseEvent e) {
 
+    }
+
+    @Override
+    public void setText(String text) {
+
+    }
+
+    @Override
+    public String getText() {
+        return null;
     }
 
     @Override

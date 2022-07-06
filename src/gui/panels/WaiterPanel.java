@@ -9,12 +9,21 @@ import restaurant.Menu;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * A Panel with the Waiter functionalities.
+ * Can Create and Send order to te kitchen for 10 tables
+ * */
 public class WaiterPanel extends AbstractPanel {
 
     private Menu menu;
     private Order currentOrder;
     private OrderPanel orderPanel;
 
+    /**
+     * Creates a WaiterPanel with the specified Menu
+     *
+     * @param menu: The Restaurant Menu
+     * */
     public WaiterPanel(Menu menu) {
         super();
         this.setLayout(null);
@@ -28,9 +37,9 @@ public class WaiterPanel extends AbstractPanel {
             }
         });
         this.menu = menu;
-        this.currentOrder = OrderUtil.getOrderFromTable(1, this.menu);
+        this.currentOrder = new Order();//OrderUtil.getOrderFromTable(1, this.menu);
+        this.currentOrder.setTableNumber(1);
         this.orderPanel = new OrderPanel(true);
-        //TODO Make tables number a variable (OPTIONS)
         String[] tables = new String[10];
         for (int i = 0; i < tables.length; i++) {
             tables[i] = "Table " + (i + 1);
@@ -41,7 +50,8 @@ public class WaiterPanel extends AbstractPanel {
         JScrollPane pane = new JScrollPane(orderPanel);
         tableList.addActionListener((e) -> {
             JComboBox<String> box = (JComboBox) e.getSource();
-            this.currentOrder = OrderUtil.getOrderFromTable(box.getSelectedIndex() + 1, this.menu);
+            this.currentOrder = new Order();//OrderUtil.getOrderFromTable(box.getSelectedIndex() + 1, this.menu);
+            this.currentOrder.setTableNumber(box.getSelectedIndex() + 1);
             refreshOrderPanel(pane, true);
         });
         JCheckBox showSelected = new JCheckBox("Show Selected");
@@ -71,7 +81,13 @@ public class WaiterPanel extends AbstractPanel {
         sendOrderButton.setAction((e) -> {
             int result = JOptionPane.showConfirmDialog(this, "Send the order to the kitchen?", "Sending Order", JOptionPane.YES_NO_OPTION);
             if (result == 0) {
-                OrderUtil.saveOrder(this.currentOrder);
+                OrderUtil.sendOrder(this.currentOrder, this.menu);
+                int tableNumber = this.currentOrder.getTableNumber();
+                this.currentOrder = new Order();
+                this.currentOrder.setTableNumber(tableNumber);
+                this.orderPanel.resetOrder();
+                refreshOrderPanel(pane, true);
+                //OrderUtil.saveOrder(this.currentOrder);
             }
         });
         sendOrderButton.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.DARK_GRAY));
@@ -94,8 +110,18 @@ public class WaiterPanel extends AbstractPanel {
         return "assets/orderBackground.png";
     }
 
+    /**
+     * A {@link JPanel} that displays the order taken from the Waiter
+     */
     private class OrderPanel extends JPanel {
 
+        /**
+         * Creates an OrderPanel with the possibility to shows only the dish with a quantity > 0
+         *
+         * @param showAll: The flag that decides if the Panel should show only the dish with a quantity > 0
+         *                 True: all the Dish are displayed
+         *                 False: only the Dish with quantity > 0 are Displayed
+         */
         private OrderPanel(boolean showAll) {
             this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
             Color transparent = new Color(0, 0, 0, 0);
@@ -118,16 +144,38 @@ public class WaiterPanel extends AbstractPanel {
             }
         }
 
+        private void resetOrder() {
+            Component[] components = this.getComponents();
+            for (Component c : components) {
+                if (c instanceof DishPanel) {
+                    DishPanel panel = (DishPanel) c;
+                    panel.dish.setQuantity(0);
+                }
+            }
+        }
     }
 
+    /**
+     * A JPanel that displays a Dish for the Waiter
+     */
     private class DishPanel extends JPanel {
 
         private Dish dish;
 
+        /**
+         * Create a new DishPanel with the specified MenuScope and a quantity of 0
+         *
+         * @param scope: The {@link MenuScope} of the Panel
+         */
         private DishPanel(MenuScope scope) {
             this(new Dish(scope));
         }
 
+        /**
+         * Creates a new DishPanel with the specified dish
+         *
+         * @param dish: The dish represented in this Panel
+         */
         private DishPanel(Dish dish) {
             super();
             this.dish = dish;

@@ -25,7 +25,7 @@ public class MainPanel extends AbstractPanel {
      */
     public MainPanel() {
         super();
-        //223, 130, 150, 30)
+        //223, 130, 150, 30
         this.setLayout(null);
         this.waiterSelectionButton = addEmployeeButton("Waiter");
         this.waiterSelectionButton.setAction((e) -> {

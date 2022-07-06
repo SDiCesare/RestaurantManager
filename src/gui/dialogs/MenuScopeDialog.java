@@ -4,6 +4,9 @@ import restaurant.MenuScope;
 
 import javax.swing.*;
 
+/**
+ * A Dialog for modifying and creating MenuScope used in {@link gui.panels.ChefPanel}
+ * */
 public class MenuScopeDialog extends JDialog {
 
     private MenuScope scope;

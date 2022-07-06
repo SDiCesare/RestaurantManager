@@ -27,6 +27,7 @@ public class OrderUtil {
         DateTimeFormatter receiptDateFormat = DateTimeFormatter.ofPattern("dd-MM-yyy HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         receipt += String.format("%s%n%n", receiptDateFormat.format(now));
+        receipt += String.format("%s %d%n%n", "Table N°", order.getTableNumber());
         receipt += String.format("%-" + nameLength + "s %s %11s%n%n", "Name", "Q", "Costs");
         for (Dish dish : order.getCookedDishes()) {
             int cost = dish.getScope().getCost();
@@ -135,13 +136,24 @@ public class OrderUtil {
     }
 
 
+    public static void sendOrder(Order order, Menu menu) {
+        if (order.getDishes().isEmpty()) { // Don't Send Empty Orders
+            return;
+        }
+        Order actualOrder = getOrderFromTable(order.getTableNumber(), menu);
+        for (Dish dish : order.getDishes()) {
+            actualOrder.add(dish);
+        }
+        saveOrder(actualOrder);
+    }
+
     /**
      * Saves the order into a text file
      *
      * @param order: The order to save
      */
     public static void saveOrder(Order order) {
-        if (order.getDishes().isEmpty() && order.getCookedDishes().isEmpty()) {//Avoiding Empty Order
+        if (order.getDishes().isEmpty() && order.getCookedDishes().isEmpty()) {//Avoiding Empty Orders
             return;
         }
         File file = new File("orders/table" + order.getTableNumber() + ".txt");

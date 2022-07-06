@@ -45,12 +45,16 @@ public class MenuUtil {
     }
 
     /**
-     * Load a menu from a file
+     * Load a menu from a file.
+     * If the file does not exist, it will be created and an empty Menu is returned
      *
      * @param file The file in which the menu is saved
-     * @return The menu saved in the file
+     * @return The menu saved in the file, or a new empty Menu if the file does not exists
      */
     public static Menu loadMenuFromFile(File file) {
+        if (!file.exists()) {
+            return new Menu();
+        }
         FileReader r = null;
         BufferedReader reader = null;
         try {

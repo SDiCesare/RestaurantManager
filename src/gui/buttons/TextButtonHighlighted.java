@@ -7,7 +7,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-//TODO Documentation and Change the name
+/**
+ * A button that change his text color when passed on with the mouse.
+ * It's a JLabel that has no more functionality for icon, and can change his text color whenever the users
+ * passed on it with the mouse.
+ */
 public class TextButtonHighlighted extends JLabel implements MouseListener {
 
     private final Color baseForeground;
@@ -15,6 +19,12 @@ public class TextButtonHighlighted extends JLabel implements MouseListener {
 
     private ActionListener action;
 
+    /**
+     * Create a TextButtonHighlighted with the two foreground color
+     *
+     * @param baseForeground:   The basic foreground color
+     * @param brightForeground: The foreground used when mouse is over it
+     */
     public TextButtonHighlighted(Color baseForeground, Color brightForeground) {
         super();
         this.baseForeground = baseForeground;
@@ -23,6 +33,11 @@ public class TextButtonHighlighted extends JLabel implements MouseListener {
         this.setForeground(baseForeground);
     }
 
+    /**
+     * Defines the Action that the Label is doing when clicked on
+     *
+     * @param action The action to define for this Label
+     */
     public void setAction(ActionListener action) {
         this.action = action;
     }
@@ -32,6 +47,16 @@ public class TextButtonHighlighted extends JLabel implements MouseListener {
         if (action != null) {
             action.actionPerformed(new ActionEvent(e.getSource(), 0, "MouseClicked"));
         }
+    }
+
+    @Override
+    public void setIcon(Icon icon) {
+
+    }
+
+    @Override
+    public Icon getIcon() {
+        return null;
     }
 
     @Override
