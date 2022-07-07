@@ -84,6 +84,24 @@ public class Menu {
         return lastID;
     }
 
+    /**
+     * Sets the lastID value to the greatest ID of the MenuScopes in this menu + 1.
+     * For Example, If the greatest ID of the MenuScopes is 4, the lastID value is set to 5.
+     *
+     * @return the new lastID
+     */
+    public int recalculateLastID() {
+        int lastID = 0;
+        for (MenuScope scope : this.menu) {
+            int id = scope.getId();
+            if (id > lastID) {
+                lastID = id;
+            }
+        }
+        this.lastID = lastID + 1;
+        return this.lastID;
+    }
+
     public void setLastID(int lastID) {
         this.lastID = lastID;
     }

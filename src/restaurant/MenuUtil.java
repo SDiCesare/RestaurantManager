@@ -33,7 +33,7 @@ public class MenuUtil {
         try {
             w = new FileWriter(file);
             writer = new BufferedWriter(w);
-            writer.write(menu.getLastID() + "\n");
+            writer.write(menu.recalculateLastID() + "\n");
             for (MenuScope scope : menu.getMenu()) {
                 writer.write(MenuScope.toText(scope) + "\n");
             }
