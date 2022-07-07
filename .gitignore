@@ -36,3 +36,4 @@ Test Menu.txt
 Test Order.txt
 receipts/
 orders/
+*.puml

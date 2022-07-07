@@ -1,5 +1,6 @@
 package gui;
 
+import gui.panels.AbstractPanel;
 import gui.panels.MainPanel;
 import restaurant.Menu;
 import restaurant.MenuUtil;
@@ -14,8 +15,9 @@ import java.io.File;
  */
 public class MainFrame extends JFrame {
 
-    private JPanel content;
+    private AbstractPanel content;
     private Menu menu;
+    private File menuFile;
 
     /**
      * Creates a new MinFrame with a menu loaded from a file
@@ -25,6 +27,7 @@ public class MainFrame extends JFrame {
     public MainFrame(File menuFile) {
         super("Restaurant Manager");
         this.menu = MenuUtil.loadMenuFromFile(menuFile);
+        this.menuFile = menuFile;
         this.setSize(600, 800);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setResizable(false);
@@ -35,9 +38,13 @@ public class MainFrame extends JFrame {
             @Override
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
-                MenuUtil.saveMenuOnFile(menuFile, MainFrame.this.menu);
+                saveMenu();
             }
         });
+    }
+
+    public void saveMenu() {
+        MenuUtil.saveMenuOnFile(menuFile, MainFrame.this.menu);
     }
 
     public Menu getMenu() {
@@ -49,7 +56,7 @@ public class MainFrame extends JFrame {
      *
      * @param content: The new content to display
      */
-    public void setContent(JPanel content) {
+    public void setContent(AbstractPanel content) {
         this.remove(this.content);
         this.content = content;
         this.add(this.content);
