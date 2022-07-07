@@ -6,6 +6,7 @@ public class Dish {
      * Convert a Dish into a string
      *
      * @param dish The Dish to convert
+     * @return The Dish converted into a String
      */
     public static String toText(Dish dish) {
         return dish.scope.getId() + ";" + dish.quantity;
@@ -16,6 +17,7 @@ public class Dish {
      *
      * @param text the string to parse
      * @param menu The menu associated with the dish
+     * @return The Dish parsed from text
      */
     public static Dish fromText(String text, Menu menu) {
         String[] split = text.split(";");
@@ -49,7 +51,9 @@ public class Dish {
     }
 
     /**
-     * Decrements this Dish quantity by 1.
+     * Decrements this Dish quantity by an amount.
+     *
+     * @param quantity: The quantity to decrement
      */
     public void decrementQuantity(int quantity) {
         this.quantity -= quantity;

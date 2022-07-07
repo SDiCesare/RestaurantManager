@@ -6,6 +6,8 @@ public class MenuScope {
      * Parse a string into a MenuScope
      *
      * @param text the string to parse
+     *
+     * @return The MenuScope parsed from text
      */
     public static MenuScope fromText(String text) {
         String[] split = text.split(";");
@@ -20,6 +22,8 @@ public class MenuScope {
      * Convert a MenuScope into a string
      *
      * @param scope The MenuScope to convert
+     *
+     * @return The MenuScope parsed into a string
      */
     public static String toText(MenuScope scope) {
         return scope.id + ";" + scope.name + ";" + scope.cost;
