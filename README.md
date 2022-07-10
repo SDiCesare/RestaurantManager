@@ -42,5 +42,12 @@ java -cp RestaurantManager.jar main.Main [OPTIONS]
 * If you try to load a different menu file when starting the program, while having active orders, the program may
   be launch a NullPointerException. This happens because if the menu loaded previously has more MenuScopes
   than the second Menu, the program maybe try to load a MenuScopes with index higher than the length of the second menu.
+  For this reason, It is no longer possible to open the CookPanel/CashierPanel after this, unless the old menu is loaded
+  or the orders are cancelled.
+
+* If a MenuScope is deleted from the Menu, while having active orders, the program may be launch a NUllPointerException.
+  This happens because if the MenuScope deleted was present in an order, the program will try to load a MenuScope with
+  an ID that no longer exists, so it will launch a NullPointerException.
+  For this reason, It is no longer possible to open the CookPanel/CashierPanel, unless all the orders are cancelled.
 
 For Other Bug encountered, please write an Issues. It will be solved as soon as possible.
